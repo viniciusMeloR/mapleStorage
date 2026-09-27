@@ -1,8 +1,4 @@
 
-# =========================================================
-# IAM ROLE DA LAMBDA
-# =========================================================
-
 resource "aws_iam_role" "lambda_role" {
 
   name = "maple-storage-lambda-role"
@@ -30,11 +26,6 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-
-# =========================================================
-# PERMISSÃO PARA LOGS
-# =========================================================
-
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
 
   role = aws_iam_role.lambda_role.name
@@ -43,9 +34,6 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 }
 
 
-# =========================================================
-# PERMISSÃO PARA LAMBDA DENTRO DA VPC
-# =========================================================
 
 resource "aws_iam_role_policy_attachment" "lambda_vpc" {
 
@@ -53,11 +41,6 @@ resource "aws_iam_role_policy_attachment" "lambda_vpc" {
 
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
-
-
-# =========================================================
-# ZIP DA LAMBDA
-# =========================================================
 
 data "archive_file" "lambda_zip" {
 
@@ -107,11 +90,6 @@ resource "aws_lambda_function" "criar_tabelas" {
     ]
   }
 
-
-  # -------------------------------------------------------
-  # VARIÁVEIS DO BANCO
-  # -------------------------------------------------------
-
   environment {
 
     variables = {
@@ -145,9 +123,6 @@ resource "aws_lambda_function" "criar_tabelas" {
   }
 }
 
-# =========================================================
-# EXECUTAR LAMBDA PARA CRIAR AS TABELAS
-# =========================================================
 
 resource "aws_lambda_invocation" "criar_tabelas" {
 

@@ -14,11 +14,6 @@ dnf update -y
 
 dnf install -y git wget unzip
 
-
-# =========================================================
-# NODE.JS
-# =========================================================
-
 echo "Instalando Node.js..."
 
 curl -fsSL https://rpm.nodesource.com/setup_22.x | bash -
@@ -31,11 +26,6 @@ node -v
 echo "NPM instalado:"
 npm -v
 
-
-# =========================================================
-# CLOUDWATCH AGENT
-# =========================================================
-
 echo "========================================="
 echo "Instalando CloudWatch Agent"
 echo "========================================="
@@ -47,11 +37,6 @@ rpm -U ./amazon-cloudwatch-agent.rpm
 rm amazon-cloudwatch-agent.rpm
 
 echo "CloudWatch Agent instalado!"
-
-
-# =========================================================
-# CONFIGURAÇÃO DO CLOUDWATCH AGENT
-# =========================================================
 
 echo "Configurando CloudWatch Agent..."
 
@@ -102,11 +87,6 @@ EOF
 
 echo "Configuração criada!"
 
-
-# =========================================================
-# INICIAR CLOUDWATCH AGENT
-# =========================================================
-
 echo "Iniciando CloudWatch Agent..."
 
 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
@@ -118,10 +98,6 @@ echo "Iniciando CloudWatch Agent..."
 echo "CloudWatch Agent iniciado!"
 
 
-# =========================================================
-# CLONAR PROJETO
-# =========================================================
-
 echo "========================================="
 echo "Clonando projeto"
 echo "========================================="
@@ -132,10 +108,6 @@ git clone https://github.com/viniciusMeloR/Cookiesz.git
 
 cd /home/ec2-user/Cookiesz
 
-
-# =========================================================
-# CRIAR .ENV
-# =========================================================
 
 echo "Criando arquivo .env..."
 

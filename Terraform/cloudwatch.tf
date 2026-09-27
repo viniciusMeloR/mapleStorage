@@ -110,7 +110,6 @@ resource "aws_cloudwatch_metric_alarm" "rds_storage" {
   period    = 300
   statistic = "Average"
 
-  # CloudWatch utiliza bytes
   # 2 GB = 2147483648 bytes
   threshold = 2147483648
 

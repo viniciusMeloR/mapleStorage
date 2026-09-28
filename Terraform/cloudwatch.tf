@@ -150,40 +150,5 @@ resource "aws_cloudwatch_metric_alarm" "rds_connections" {
     Environment = "producao"
   }
 }
-resource "aws_iam_role" "ec2_cloudwatch_agent" {
-  name = "maple-storage-ec2-cloudwatch-agent"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-
-    Statement = [
-      {
-        Effect = "Allow"
-
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
-
-  tags = {
-    Name        = "MapleStorage-EC2-CloudWatch-Agent"
-    Environment = "producao"
-  }
-}
-
-resource "aws_iam_instance_profile" "ec2_cloudwatch_agent" {
-  name = "maple-storage-ec2-cloudwatch-agent"
-
-  role = aws_iam_role.ec2_cloudwatch_agent.name
-}
-
-resource "aws_iam_role_policy_attachment" "ec2_cloudwatch_agent" {
-  role = aws_iam_role.ec2_cloudwatch_agent.name
-
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-}
 

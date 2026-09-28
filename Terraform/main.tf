@@ -21,7 +21,6 @@ resource "aws_instance" "instancia" {
     rds_password = var.db_senha
 
   })
-  iam_instance_profile   = aws_iam_instance_profile.ec2_cloudwatch_agent.name
   vpc_security_group_ids = [aws_security_group.SG.id]
 }
 
@@ -143,7 +142,7 @@ resource "aws_security_group" "SGPriv" {
     security_groups = [aws_security_group.SG.id]
   }
   ingress {
-    description     = "Lambda acessa RDS MySQL"
+    description     = "Liberar o acesso para a lambda acessar o RDS"
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"

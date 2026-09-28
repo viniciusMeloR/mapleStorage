@@ -52,10 +52,6 @@ data "archive_file" "lambda_zip" {
 }
 
 
-# =========================================================
-# FUNÇÃO LAMBDA
-# =========================================================
-
 resource "aws_lambda_function" "criar_tabelas" {
 
   function_name = "maple-storage-criar-tabelas"
@@ -74,10 +70,6 @@ resource "aws_lambda_function" "criar_tabelas" {
 
   memory_size = 256
 
-
-  # -------------------------------------------------------
-  # CONFIGURAÇÃO DA VPC
-  # -------------------------------------------------------
 
   vpc_config {
 

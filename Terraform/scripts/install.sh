@@ -5,17 +5,15 @@ echo "========================================="
 echo "Iniciando configuração do Maple Storage"
 echo "========================================="
 
-
-# =========================================================
-# ATUALIZAÇÃO DO SISTEMA
-# =========================================================
-
+#Dando update no gerenciador de pacotes
 dnf update -y
 
+#Baixar git,wget e unzip
 dnf install -y git wget unzip
 
-echo "Instalando Node.js..."
+echo "Instalando Node.js"
 
+#Instalar o node
 curl -fsSL https://rpm.nodesource.com/setup_22.x | bash -
 
 dnf install -y nodejs
@@ -26,9 +24,7 @@ node -v
 echo "NPM instalado:"
 npm -v
 
-echo "========================================="
-echo "Clonando projeto"
-echo "========================================="
+#Clonando o projeto
 
 cd /home/ec2-user
 
@@ -54,7 +50,7 @@ EOF
 # =========================================================
 # CONFIGURAÇÃO DO PM2
 # =========================================================
-
+#Fazendo o pm2 rodar o app.js
 cat <<'EOF' > /home/ec2-user/mapleStorage/ecosystem.config.js
 module.exports = {
   apps: [
@@ -77,23 +73,16 @@ chown ec2-user:ec2-user /home/ec2-user/mapleStorage/ecosystem.config.js
 chown -R ec2-user:ec2-user /home/ec2-user/mapleStorage
 
 
-# =========================================================
-# INSTALAR DEPENDÊNCIAS
-# =========================================================
-
-echo "Instalando dependências..."
+#instalar npm
 
 sudo -u ec2-user npm install
 
 
-# =========================================================
-# AGUARDAR RDS
-# =========================================================
-
 echo "========================================="
 echo "Aguardando RDS..."
 echo "========================================="
-
+#Teste para abrir uma conexao na porta e ver se o rds esta criado para
+#aceitar conexões
 until timeout 2 bash -c "</dev/tcp/${rds_endpoint}/3306" 2>/dev/null
 do
     echo "RDS ainda não está disponível..."
@@ -111,8 +100,10 @@ echo "Instalando PM2..."
 
 npm install -g pm2
 
+#Executar o pm2 com a configuração que acabamos de criar
 sudo -u ec2-user pm2 start /home/ec2-user/mapleStorage/ecosystem.config.js
 
+#salvar o processo do pm2 para reiniciar a aplicacao
 sudo -u ec2-user pm2 save
 
 
